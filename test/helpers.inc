@@ -2826,7 +2826,7 @@ function RunTest ( $test_dir, $skipdemo, $usemarks, $teamcity )
 		printf ( "$prefix done; %d/%d subtests FAILED:\n%s", $nfailed, $nsubtests, $log );
 		if ( $teamcity && $nfailed!=0 )
 	        {
-			printf ( "##teamcity[testFailed name='$test_dir' message='%s' details='%s']", $config->Name(), $log );
+			printf ( "##teamcity[testFailed name='$test_dir' message='%s' details='']", $config->Name() );
 		}
 	if ( $teamcity)
 	{
