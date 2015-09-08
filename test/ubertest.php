@@ -62,7 +62,7 @@ if ( array_key_exists ( "DBUSER", $_ENV ) && $_ENV["DBUSER"] )
 if ( array_key_exists ( "DBPASS", $_ENV ) && $_ENV["DBPASS"] ) 
 	$locals['db-password'] = $_ENV["DBPASS"];
 
-#teamcity = false;
+$teamcity = false;
 $run = false;
 $test_dirs = array();
 $test_range = array();
@@ -290,7 +290,13 @@ if ( $total_tests_failed )
 		$total_tests_failed, $total_tests,
 		$total_subtests_failed, $total_subtests,$total_skipped,
 		MyMicrotime()-$t );
-	exit ( 1 );
+	if ( $teamcity )
+	{
+		exit ( 0 );
+	} else
+	{
+		exit ( 1 );
+	}
 } else
 {
 	printf ( "\n%d tests and %d subtests succesful, %d tests skipped, %.2f sec elapsed\nALL OK\n",
