@@ -62,6 +62,7 @@ if ( array_key_exists ( "DBUSER", $_ENV ) && $_ENV["DBUSER"] )
 if ( array_key_exists ( "DBPASS", $_ENV ) && $_ENV["DBPASS"] ) 
 	$locals['db-password'] = $_ENV["DBPASS"];
 
+#teamcity = false;
 $run = false;
 $test_dirs = array();
 $test_range = array();
@@ -71,6 +72,7 @@ for ( $i=0; $i<count($args); $i++ )
 	$arg = $args[$i];
 
 	if ( false );
+	else if ( $arg=="tc" || $arg=="teamcity" )                    { $g_model = false; $run = true; $teamcity = true; }
 	else if ( $arg=="g" || $arg=="gen" )			{ $g_model = true; $run = true; }
 	else if ( $arg=="t" || $arg=="test" )			{ $g_model = false; $run = true; }
 	else if ( $arg=="qt" )							{ $g_model = false; $run = true; $user_skip = true; }
@@ -215,7 +217,7 @@ foreach ( $tests as $test )
 	if ( file_exists ( $test."/test.xml" ) )
 	{
 		$total_tests++;
-		$res = RunTest ( $test, $g_skipdemo, $g_usemarks );
+		$res = RunTest ( $test, $g_skipdemo, $g_usemarks, $teamcity );
 
 		if ( !is_array($res) )
 		{

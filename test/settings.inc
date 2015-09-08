@@ -33,6 +33,7 @@ $g_odbc     = false;
 $g_strict	= false;
 $g_skipdemo = false;
 $g_usemarks = true; // that we mark the output of every test in the searchd.log and query.log
+$teamcity = false;
 $g_strictverbose = false;
 
 $windows = isset($_SERVER["WINDIR"]) || isset($_SERVER["windir"]) || isset($_SERVER["HOMEDRIVE"]);

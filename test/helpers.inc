@@ -2526,7 +2526,7 @@ function MarkTest ( $logfile, $test_dir )
 }
 
 
-function RunTest ( $test_dir, $skipdemo, $usemarks )
+function RunTest ( $test_dir, $skipdemo, $usemarks, $teamcity )
 {
 	global	$index_data_path, $agents, $sd_pid_file, $sd_managed_searchd,
 			$sd_skip_indexer, $g_id64, $windows, $g_locals, $sd_log, $sd_query_log,
@@ -2624,6 +2624,10 @@ function RunTest ( $test_dir, $skipdemo, $usemarks )
 
 		// do the dew
 		$subtest = $config->SubtestNo()+1;
+		if ( $teamcity )
+		{
+			print ( "##teamcity[testStarted name='$test_dir']" );
+		}
 		print ( "$prefix $subtest/$nsubtests\r" );
 		$config->WriteReportHeader ( $report );
 
@@ -2820,6 +2824,11 @@ function RunTest ( $test_dir, $skipdemo, $usemarks )
 		printf ( "$prefix done; %d/%d subtests OK\n", $config->SubtestNo(), $nsubtests );
 	else
 		printf ( "$prefix done; %d/%d subtests FAILED:\n%s", $nfailed, $nsubtests, $log );
+		//printf ( "##teamcity[testFailed name='$test_dir' message='%d/%d subtests FAILED:\n%s' details='message']", $nfailed, $nsubtests, $log );
+	if ( $teamcity)
+	{
+		 print ( "##teamcity[testFinished name='$test_dir']" );
+	}
 
 	fclose ( $report );
 
